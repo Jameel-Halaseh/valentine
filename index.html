@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d0a1a 50%, #1a0a0a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: floatUp 8s ease-in-out infinite;
+            opacity: 0.6;
+            color: #ff6b8a;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #ff2d55;
+            top: -100px;
+            left: -100px;
+            animation: pulse1 8s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #ff6b8a;
+            bottom: -50px;
+            right: -50px;
+            animation: pulse2 6s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: #c44569;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse3 10s ease-in-out infinite;
+        }
+
+        @keyframes pulse1 {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+        }
+
+        @keyframes pulse2 {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+        }
+
+        @keyframes pulse3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+            50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.4; }
+        }
+
+        /* Main Card */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 50px;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 138, 0.2);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 100px rgba(255, 45, 85, 0.1),
+                inset 0 0 60px rgba(255, 107, 138, 0.05);
+            max-width: 500px;
+            width: 90%;
+            animation: cardAppear 1s ease-out;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        /* Heart Icon */
+        .heart-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 45, 85, 0.5));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+        }
+
+        /* Typography */
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(255, 107, 138, 0.5);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .name {
+            color: #ff6b8a;
+            font-weight: 600;
+        }
+
+        /* Buttons Container */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 70px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Yes Button */
+        .btn-yes {
+            padding: 18px 0;
+            width: 150px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff2d55 0%, #ff6b8a 100%);
+            color: white;
+            box-shadow: 
+                0 10px 30px rgba(255, 45, 85, 0.4),
+                0 0 0 0 rgba(255, 107, 138, 0.4);
+            transition: box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-yes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-yes:hover {
+            box-shadow: 
+                0 15px 40px rgba(255, 45, 85, 0.5),
+                0 0 0 10px rgba(255, 107, 138, 0.2);
+        }
+
+        .btn-yes:hover::before {
+            left: 100%;
+        }
+
+        /* No Button */
+        .btn-no {
+            padding: 18px 0;
+            width: 150px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.8);
+            transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        background 0.2s ease,
+                        opacity 0.3s ease;
+            position: fixed;
+            z-index: 100;
+            opacity: 0;
+            text-align: center;
+        }
+        
+        .btn-no.visible {
+            opacity: 1;
+        }
+
+        .btn-no:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-no.escaping {
+            pointer-events: none;
+        }
+
+        /* Placeholder to reserve space for No button initially */
+        .no-placeholder {
+            width: 150px;
+            padding: 18px 0;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d0a1a 50%, #1a0a0a 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            flex-direction: column;
+        }
+
+        .success-screen.active {
+            display: flex;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-content {
+            text-align: center;
+            animation: successPop 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes successPop {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-heart {
+            font-size: 120px;
+            animation: successHeartbeat 0.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(255, 45, 85, 0.6));
+        }
+
+        @keyframes successHeartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .success-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #fff;
+            margin: 20px 0;
+            text-shadow: 0 0 40px rgba(255, 107, 138, 0.6);
+        }
+
+        .success-message {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            top: -20px;
+            animation: confettiFall 4s ease-in-out forwards;
+            z-index: 250;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkles on success */
+        .sparkle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1s ease-out forwards;
+            z-index: 250;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .card {
+                padding: 40px 30px;
+            }
+            .title {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .buttons {
+                gap: 20px;
+            }
+            .btn-yes, .btn-no {
+                padding: 14px 0;
+                width: 120px;
+                font-size: 1rem;
+                border-width: 2px;
+            }
+            .no-placeholder {
+                width: 120px;
+                padding: 14px 0;
+                font-size: 1rem;
+            }
+            .success-title {
+                font-size: 2.5rem;
+            }
+            .success-message {
+                font-size: 1.2rem;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Main Card -->
+    <div class="card" id="mainCard">
+        <div class="heart-icon">💝</div>
+        <h1 class="title">Will You Be My Valentine?</h1>
+        <p class="subtitle">I have something special to ask you...</p>
+        
+        <div class="buttons" id="buttonsContainer">
+            <button class="btn-yes" onclick="sayYes()">Yes</button>
+            <div class="no-placeholder" id="noPlaceholder"><span style="visibility:hidden">No</span></div>
+        </div>
+    </div>
+
+    <!-- No Button (outside card so it can move freely) -->
+    <button class="btn-no" id="noBtn">No</button>
+
+    <!-- Success Screen -->
+    <div class="success-screen" id="successScreen">
+        <div class="success-content">
+            <div class="success-heart">💖</div>
+            <h1 class="success-title">Yaaay!</h1>
+            <p class="success-message">I knew you'd say yes! You just made me the happiest person ever! Can't wait to spend Valentine's Day with you! 💕</p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (6 + Math.random() * 4) + 's';
+                heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        createFloatingHearts();
+
+        // No button escape logic
+        const noBtn = document.getElementById('noBtn');
+        const placeholder = document.getElementById('noPlaceholder');
+        let escapeCount = 0;
+        let isInitialized = false;
+        const messages = [
+            "No",
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Please? 🥺",
+            "Pretty please?",
+            "Just say yes!",
+            "Come on!",
+            "Don't be shy!",
+            "You know you want to!",
+            "Fine... still no?",
+            "💔",
+            "I'll be sad...",
+            "Last chance!",
+            "Okay, okay...",
+            "But why? 😢"
+        ];
+
+        // Position the No button next to the Yes button on load
+        function initButtonPosition() {
+            // Only position if button hasn't escaped yet
+            if (escapeCount > 0) return;
+            
+            const yesBtn = document.querySelector('.btn-yes');
+            const yesBtnRect = yesBtn.getBoundingClientRect();
+            const placeholderRect = placeholder.getBoundingClientRect();
+            
+            // Position No button at placeholder X and same Y as Yes button
+            noBtn.style.left = placeholderRect.left + 'px';
+            noBtn.style.top = yesBtnRect.top + 'px';
+            
+            if (!isInitialized) {
+                noBtn.classList.add('visible');
+                isInitialized = true;
+            }
+        }
+        
+        // Initialize on page load
+        window.addEventListener('load', initButtonPosition);
+        // Also run after multiple delays to ensure layout is complete
+        setTimeout(initButtonPosition, 50);
+        setTimeout(initButtonPosition, 150);
+        setTimeout(initButtonPosition, 300);
+
+        function runAway(e) {
+            if (!isInitialized) initButtonPosition();
+            
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnWidth = btnRect.width;
+            const btnHeight = btnRect.height;
+            
+            // Get current button center
+            const btnCenterX = btnRect.left + btnWidth / 2;
+            const btnCenterY = btnRect.top + btnHeight / 2;
+            
+            // Get mouse/touch position
+            let mouseX, mouseY;
+            if (e && e.touches) {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+            } else if (e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            } else {
+                mouseX = btnCenterX;
+                mouseY = btnCenterY;
+            }
+            
+            // Calculate direction away from mouse
+            let dirX = btnCenterX - mouseX;
+            let dirY = btnCenterY - mouseY;
+            
+            // Normalize direction
+            const length = Math.sqrt(dirX * dirX + dirY * dirY) || 1;
+            dirX = dirX / length;
+            dirY = dirY / length;
+            
+            // Distance to move (random between 300-600px) - INCREASED
+            const distance = 300 + Math.random() * 300;
+            
+            // Calculate new position
+            let newX = btnRect.left + dirX * distance;
+            let newY = btnRect.top + dirY * distance;
+            
+            // Add more randomness to make it less predictable
+            newX += (Math.random() - 0.5) * 250;
+            newY += (Math.random() - 0.5) * 200;
+            
+            // Keep within viewport with padding
+            const padding = 20;
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+            
+            // Bounce off edges
+            if (newX < padding) newX = padding + Math.random() * 100;
+            if (newX > maxX) newX = maxX - Math.random() * 100;
+            if (newY < padding) newY = padding + Math.random() * 100;
+            if (newY > maxY) newY = maxY - Math.random() * 100;
+            
+            // Apply new position
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+
+            // Pulse the Yes button to draw attention
+            const yesBtn = document.querySelector('.btn-yes');
+            yesBtn.style.animation = 'none';
+            yesBtn.offsetHeight;
+            yesBtn.style.animation = 'pulse 0.5s ease';
+            
+            escapeCount++;
+        }
+        
+        // Change text only on direct hover
+        let textChangeCount = 0;
+        noBtn.addEventListener('mouseenter', () => {
+            textChangeCount++;
+            if (textChangeCount < messages.length) {
+                noBtn.textContent = messages[textChangeCount];
+            } else {
+                noBtn.textContent = messages[Math.floor(Math.random() * messages.length)];
+            }
+        });
+
+        // Track mouse movement near the button
+        document.addEventListener('mousemove', (e) => {
+            const btnRect = noBtn.getBoundingClientRect();
+            const buffer = 100; // Detection radius - increased
+            
+            if (e.clientX > btnRect.left - buffer &&
+                e.clientX < btnRect.right + buffer &&
+                e.clientY > btnRect.top - buffer &&
+                e.clientY < btnRect.bottom + buffer) {
+                runAway(e);
+            }
+        });
+
+        // Add pulse animation for yes button (glow effect, no scaling)
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { box-shadow: 0 10px 30px rgba(255, 45, 85, 0.4); }
+                50% { box-shadow: 0 10px 50px rgba(255, 45, 85, 0.8), 0 0 30px rgba(255, 107, 138, 0.5); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Yes button success
+        function sayYes() {
+            document.getElementById('mainCard').style.display = 'none';
+            noBtn.style.display = 'none'; // Hide the No button
+            document.getElementById('successScreen').classList.add('active');
+            createConfetti();
+            createSparkles();
+        }
+
+        // Confetti celebration
+        function createConfetti() {
+            const colors = ['#ff2d55', '#ff6b8a', '#fff', '#ffb6c1', '#ff69b4', '#ffc0cb'];
+            const shapes = ['❤️', '💕', '💖', '💗', '✨', '💘'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        // Sparkle effect
+        function createSparkles() {
+            setInterval(() => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.background = Math.random() > 0.5 ? '#ff6b8a' : '#fff';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }, 200);
+        }
+
+        // Prevent right-click on No button
+        noBtn.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            runAway(e);
+        });
+
+        // Mobile touch support - move on any touch near button
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const btnRect = noBtn.getBoundingClientRect();
+            const buffer = 60;
+            
+            if (touch.clientX > btnRect.left - buffer &&
+                touch.clientX < btnRect.right + buffer &&
+                touch.clientY > btnRect.top - buffer &&
+                touch.clientY < btnRect.bottom + buffer) {
+                runAway(e);
+            }
+        });
+
+        // Mobile tap support
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            runAway(e);
+        });
+        
+        // Click handler
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            runAway(e);
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (isInitialized && escapeCount === 0) {
+                // Re-align if button hasn't been moved yet
+                const yesBtn = document.querySelector('.btn-yes');
+                const yesBtnRect = yesBtn.getBoundingClientRect();
+                const placeholderRect = placeholder.getBoundingClientRect();
+                noBtn.style.left = placeholderRect.left + 'px';
+                noBtn.style.top = yesBtnRect.top + 'px';
+            } else if (isInitialized) {
+                const btnRect = noBtn.getBoundingClientRect();
+                const maxX = window.innerWidth - btnRect.width - 20;
+                const maxY = window.innerHeight - btnRect.height - 20;
+                
+                if (btnRect.left > maxX) noBtn.style.left = maxX + 'px';
+                if (btnRect.top > maxY) noBtn.style.top = maxY + 'px';
+            }
+        });
+    </script>
+</body>
+</html>
